@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/simple-grid.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="{{ page.meta.get('meta-description') }}">
+  </head>
+  <body>
+    <header>
+      <nav></nav>
+    </header>
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col-2 hidden-sm"></div>
+          <div class="col-8">
+            <article>
+              {% block content %}
+              <h1>{{ page.meta.get('title') }}</h1>
+              <small>{{ page.meta.get('publish-date') }}</small>
+              {{ page }} {% endblock content %}
+            </article>
+          </div>
+          <div class="col-2 hidden-sm"></div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
