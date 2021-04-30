@@ -1,7 +1,9 @@
-title: Starting This Site
+title: Starting This Site - Introduction
 publish-date: 2021-04-27
 publish: true
-updated: 2021-04-29
+updated-date: 2021-04-29
+previous-post:
+next-post: adding-favicon
 
 I wanted to start a personal site. A site to host my resume, and serve as a place to write down things for myself.
 
@@ -16,3 +18,5 @@ This post will be amended and appended as the project continues.
 I generated a favicon using the [favicon.io generator](https://favicon.io/favicon-generator/) by [johnsorrentino](https://twitter.com/johnsorrentino)
 
 Realizing that this post will get massive if I provide the level of detail I'm intending. I am going to split these to a folder and sequence them.
+
+Splitting them into a folder was easy _after_ I realized I needed to type the Flask route variable as a path.
