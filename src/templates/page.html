@@ -1,52 +1,33 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>{{ title }}</title>
-    <link rel="stylesheet" href="/static/simple-grid.min.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="{{ page.meta.get('meta-description') }}"
-    />
-  </head>
-  <body>
-    <header>
-      <nav></nav>
-    </header>
-    <main>
-      <div class="container">
-        <div class="row">
-          <div class="col-2 hidden-sm"></div>
-          <div class="col-8">
-            <article>
-              {% block content %}
-              <h1>{{ page.meta.get('title') }}</h1>
-              <small
-                >First published: {{ page.meta.get('publish-date') }}</small
-              >
-              {% if page.meta.get('updated-date') %}
-              <br />
-              <small>Last updated: {{ page.meta.get('updated-date') }}</small>
-              {% endif %} {{ page }} {% endblock content %}
-            </article>
-            <p class="PageNavigation" role="navigation">
-              {% if next_page %}
-              <b>Next: </b
-              ><a href="{{ url_for('.entries', path=next_page.path) }}"
-                >{{next_page.meta.get('title')}}</a
-              >
-              {% endif %} {% if previous_page %}
-              <b>Previous: </b
-              ><a href="{{ url_for('.entries', path=previous_page.path) }}"
-                >{{ previous_page.meta.get('title') }}</a
-              >
-              {% endif %}
-            </p>
-          </div>
-          <div class="col-2 hidden-sm"></div>
-        </div>
-      </div>
-    </main>
-  </body>
-</html>
+{% extends "_layout.html" %}
+{% block page_title %}{{ title }}{% endblock page_title %}
+
+{% block page_description %}
+<meta name="description" content="{{ page.meta.get('meta-description') }}" />
+{% endblock page_description %}
+
+{% block content %}
+<h1>{{ page.meta.get('title') }}</h1>
+<small>First published: {{ page.meta.get('publish-date') }}</small>
+{% if page.meta.get('updated-date') %}
+<br />
+<small>Last updated: {{ page.meta.get('updated-date') }}</small>
+{% endif %}
+{{ page }}
+<p class="PageNavigation" role="navigation">
+  {% if next_page %}
+  <b>Next: </b>
+    <a href="{{ url_for('.entries', path=next_page.path) }}">
+        {{ next_page.meta.get('title') }}
+    </a>
+  {% endif %}
+  {% if previous_page %}
+  <br/>
+  <b>Previous: </b>
+    <a href="{{ url_for('.entries', path=previous_page.path) }}">
+      {{ previous_page.meta.get('title') }}
+    </a>
+  {% endif %}
+</p>
+<br />
+<p><a href="{{ url_for('index') }}">Home</a></p>
+{% endblock content %}

@@ -20,3 +20,7 @@ I generated a favicon using the [favicon.io generator](https://favicon.io/favico
 Realizing that this post will get massive if I provide the level of detail I'm intending. I am going to split these to a folder and sequence them.
 
 Splitting them into a folder was easy _after_ I realized I needed to type the Flask route variable as a path.
+
+...
+
+Probably a disservice to introdcutions to call this an "Introduction"

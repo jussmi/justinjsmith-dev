@@ -1,3 +1,3 @@
 title: Justin J. Smith's Site
-description: A place for me and anyone else who wants to be here.
+description: A place for me to put down some thoughts and practice some techniques.
 
