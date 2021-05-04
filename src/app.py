@@ -86,8 +86,9 @@ def entries(path=None):
 
 def post_is_active(post):
     # filter out unpublished posts by date
-    if post.meta.get("publish-date") > datetime.date.today():
-        logging.debug(f"Post publish date: {post.meta.get('publish-date')}")
+    logging.debug(f"Checking whether {post.path} is active.")
+    if post.meta.get("publish-datetime") > datetime.datetime.utcnow():
+        logging.debug(f"Post publish date: {post.meta.get('publish-datetime')}")
         logging.debug(f"Today's Date: {datetime.date.today()}")
         return False
     # filter out unpublished posts by boolean

@@ -1,8 +1,8 @@
 title: Starting This Site - Do Not Register a .us Domain
 page-description: Why you should not register a .us domain to your personal name.
-publish-date: 2021-04-29
+publish-datetime: 2021-04-29 14:00:00
 publish: true
-updated-date: 2021-05-02
+updated-date: 2021-05-02 14:00:00
 previous-post: adding-favicon
 next-post: initial-deploy-with-netlify
 

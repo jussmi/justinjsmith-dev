@@ -7,10 +7,10 @@
 
 {% block content %}
 <h1>{{ page.meta.get('title') }}</h1>
-<small>First published: {{ page.meta.get('publish-date') }}</small>
-{% if page.meta.get('updated-date') %}
+<small>First published: {{ page.meta.get('publish-datetime') }}</small>
+{% if page.meta.get('updated-datetime') %}
 <br />
-<small>Last updated: {{ page.meta.get('updated-date') }}</small>
+<small>Last updated: {{ page.meta.get('updated-datetime') }}</small>
 {% endif %}
 {{ page }}
 <p class="PageNavigation" role="navigation">
