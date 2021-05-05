@@ -1,36 +1,38 @@
+# -*- coding: utf-8 -*-
+"""The app module, containing the app factory function."""
 import datetime
 import logging
 import os
 
 from flask import abort, Flask, render_template, url_for
-from flask_flatpages import FlatPages
+from flask_flatpages import FlatPages, pygments_style_defs
 
 logging.basicConfig(level="DEBUG" if os.environ.get("FLASK_DEBUG") else "INFO")
 
-# Tell Flatpages to auto reload when a page is changed, and look for .md files
-FLATPAGES_AUTO_RELOAD = True
-FLATPAGES_EXTENSION = ".md"
-# the default is actually pages, I just like it explicit so you know where to look
-FLATPAGES_ROOT = "pages"
-
-# Set frozen flask to go up a folder
-FREEZER_DESTINATION = "../build"
-
-# Create our app object, use this page as our settings (will pick up DEBUG)
-# Not using the blueprint factory pattern or anything like that because
-# well... no need
-app = Flask(__name__)
-
-# For settings, we just use this file itself, very easy to configure
-app.config.from_object(__name__)
-
-# We want Flask to allow no slashes after paths, because they get turned into flat files
-app.url_map.strict_slashes = False
 
 # pages is an instance of the FlatPages extension
 # it's essentially a list of Page objects with some fancy wrapping
 # on top. Almost like a query result object really.
-pages = FlatPages(app)
+pages = FlatPages()
+
+
+def create_app(config_object="settings"):
+    """Create the application factory."""
+    app = Flask(__name__.split(".")[0])
+    app.config.from_object(config_object)
+    # We want Flask to allow no slashes after paths, because they get turned into flat files
+    app.url_map.strict_slashes = False
+    pages.init_app(app)
+    return app
+
+
+app = create_app()
+
+
+@app.route("/pygments.css")
+def pygments_css():
+    return pygments_style_defs("tango"), 200, {"Content-Type": "text/css"}
+
 
 # Route to FlatPages at our root, and route any path that ends in ".html"
 # Basically, try to match SOMETHING.html with a corresponding SOMETHING.md
@@ -65,12 +67,16 @@ def entries(path=None):
     if previous_post:
         previous_path = page_root + "/" + previous_post
         previous_page = pages.get(previous_path)
+        if not post_is_active(previous_page):
+            previous_page = None
     else:
         previous_page = None
 
     if next_post:
         next_path = page_root + "/" + next_post
         next_page = pages.get(next_path)
+        if not post_is_active(next_page):
+            next_page = None
     else:
         next_page = None
 
@@ -98,7 +104,7 @@ def post_is_active(post):
     return True
 
 
-def get_active_posts(pages):
+def get_active_posts(pages, sort=True, sort_by_meta="publish-datetime"):
     active_posts = []
     for p in pages:
         # filter out the index
@@ -110,4 +116,6 @@ def get_active_posts(pages):
             continue
         active_posts.append(p)
     logging.info(f"{ len(active_posts) } active posts found")
+    if sort:
+        active_posts.sort(key=lambda x: x.meta[sort_by_meta])
     return active_posts

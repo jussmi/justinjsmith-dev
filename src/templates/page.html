@@ -1,8 +1,15 @@
 {% extends "_layout.html" %}
+
+{% block css %}
+{% if page.meta.get('code-examples') %}
+    <link rel="stylesheet" href="{{ url_for('pygments_css')  }}">
+{% endif %}
+{% endblock css %}
+
 {% block page_title %}{{ title }}{% endblock page_title %}
 
 {% block page_description %}
-<meta name="description" content="{{ page.meta.get('meta-description') }}" />
+<meta name="description" content="{{ page.meta.get('page-description') }}" />
 {% endblock page_description %}
 
 {% block content %}
