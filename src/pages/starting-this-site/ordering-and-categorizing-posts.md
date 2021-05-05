@@ -30,3 +30,18 @@ def get_active_posts(pages, sort=True, sort_by_meta="publish-datetime"):
 I was trying to show that I made a function that did two things, and I really need to abstract the above code to have a separate function for sorting. _However_, depending on when you're reading this you'll notice how... plain, the code above looks.
 
 In trying to solve that, `app.py` is getting a bit cluttered. I am going to refactor some of that out.
+
+##### Code Highlighting Works and Sorting Posts
+
+The code highlighting works. It worked after I rolled back my attempts to fix it. Always a good lesson, do less!
+
+```
+:::python
+def sort_pages(pages, sort_by_meta="publish-datetime", ascending=True):
+    """There's an argument this function is unnecessary. This is an easier
+    format for me to remember."""
+    return sorted(
+        pages, reverse=not ascending, key=lambda page: page.meta[sort_by_meta]
+    )
+```
+Refactored that functionality out of the other function, and now I have a 1 liner. I do not mind one liners that are more intuitive to me and provide reasonable defaults. Another day (tomorrow?) I'll tackle the grouping.

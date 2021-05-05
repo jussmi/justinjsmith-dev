@@ -41,8 +41,9 @@ def pygments_css():
 def index():
     active_posts = get_active_posts(pages)
     page = pages.get_or_404("index")
+    sorted_active_posts = sort_pages(active_posts)
     post_tuples = [
-        (p.meta["title"], url_for(".entries", path=p.path)) for p in active_posts
+        (p.meta["title"], url_for(".entries", path=p.path)) for p in sorted_active_posts
     ]
     return render_template(
         "index.html", page=page, title=page.meta["title"], post_tuples=post_tuples
@@ -104,7 +105,7 @@ def post_is_active(post):
     return True
 
 
-def get_active_posts(pages, sort=True, sort_by_meta="publish-datetime"):
+def get_active_posts(pages):
     active_posts = []
     for p in pages:
         # filter out the index
@@ -116,6 +117,12 @@ def get_active_posts(pages, sort=True, sort_by_meta="publish-datetime"):
             continue
         active_posts.append(p)
     logging.info(f"{ len(active_posts) } active posts found")
-    if sort:
-        active_posts.sort(key=lambda x: x.meta[sort_by_meta])
     return active_posts
+
+
+def sort_pages(pages, sort_by_meta="publish-datetime", ascending=True):
+    """There's an argument this function is unnecessary. This is an easier
+    format for me to remember."""
+    return sorted(
+        pages, reverse=not ascending, key=lambda page: page.meta[sort_by_meta]
+    )
